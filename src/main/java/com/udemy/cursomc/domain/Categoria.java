@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Categoria implements Serializable {
@@ -19,6 +19,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	@JsonManagedReference //Fazendo uma serialização de produtos ao chamar categorias (Faz isso no lado onde precisa vir os dados)
 	@ManyToMany(mappedBy = "categorias") //Converte o mapeamento que já foi feito no outro objeto para essa tabela e identifica sozinho o relacionamento
 	private List<Produto> produtos = new ArrayList<>();
 
