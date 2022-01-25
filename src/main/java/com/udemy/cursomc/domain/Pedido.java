@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -29,13 +30,11 @@ public class Pedido implements Serializable {
 	private Date instante;
 	
 //	@JsonManagedReference //Define no json pra buscar o pagamento associado
-//	@OneToOne(cascade = CascadeType.ALL) //Sem essa anotação da erro de entidade transiente (Pecualidade do JPA)
-	@JsonManagedReference
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL) //Sem essa anotação da erro de entidade transiente (Pecualidade do JPA)
 	@PrimaryKeyJoinColumn
 	private Pagamento pagamento;
 	
-	@JsonManagedReference //Define no json pra buscar o cliente associado
+//	@JsonManagedReference //Define no json pra buscar o cliente associado
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;

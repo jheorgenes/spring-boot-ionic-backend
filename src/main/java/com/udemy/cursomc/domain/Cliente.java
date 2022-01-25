@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,8 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.udemy.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -30,7 +30,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
-	@JsonManagedReference() //Serializa Endereço
+	//@JsonManagedReference() //Serializa Endereço
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -38,7 +38,8 @@ public class Cliente implements Serializable {
 	@CollectionTable(name = "TELEFONE") // Cria uma tabela auxiliar com o nome TELEFONE para guardar os telefones
 	private Set<String> telefones = new HashSet<>();
 	
-	@JsonBackReference //Define para não buscar os pedidos desse cliente
+	//@JsonBackReference //Define para não buscar os pedidos desse cliente
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 
