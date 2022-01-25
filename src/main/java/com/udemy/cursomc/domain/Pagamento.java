@@ -10,7 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.udemy.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
@@ -19,12 +19,14 @@ public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@JoinColumn(name = "id")
 	private Integer id;
 	private Integer estado;
 	
+	@JsonBackReference
 	@OneToOne
-	@JoinColumn(name = "pedido_id")
-	@MapsId
+	@MapsId //Indica que os valores da chave primária serão copiados da entidade Pedido
+	@JoinColumn(name = "pedido_id") //Referenciando pedido.
 	private Pedido pedido;
 	
 	public Pagamento() {}
