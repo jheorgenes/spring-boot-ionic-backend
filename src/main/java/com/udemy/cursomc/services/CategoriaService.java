@@ -13,7 +13,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository;
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Optional<Categoria> categoria = repository.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName())); //Verifica se tem categoria ou se tiver nulo ou inválido, retorna a exception criada manualmente
 	}
@@ -22,6 +22,10 @@ public class CategoriaService {
 		categoria.setId(null); //Ao verificar que essa categoria tem o ID nulo, significa que não há categoria cadastrada
 		return repository.save(categoria);
 	}
-	
+
+	public Categoria update(Categoria categoria) {
+		find(categoria.getId()); //Validando se existe o ID para ser atualizado
+		return repository.save(categoria);
+	}
 
 }

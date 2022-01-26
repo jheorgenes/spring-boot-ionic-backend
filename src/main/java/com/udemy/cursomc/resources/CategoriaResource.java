@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +28,8 @@ public class CategoriaResource {
 	 * @return ResponseEntity (Classe que define as respostas para requisições HTTP)
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id) { //Definindo que será buscado o ID via parametro
-		Categoria categoria = service.buscar(id);
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) { //Definindo que será buscado o ID via parametro
+		Categoria categoria = service.find(id); //Buscando categoria no banco de dados
 		return ResponseEntity.ok().body(categoria);
 	}
 	
@@ -41,5 +42,12 @@ public class CategoriaResource {
 					.buildAndExpand(categoria.getId()) //Atribuíndo o valor do path /{id} substituindo-o pelo id do objeto
 					.toUri(); //Convertendo para URI
 		return ResponseEntity.created(uri).build(); //Retornando o código 201 com a URI completa e o build para compilar.
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id){
+		categoria.setId(id); //Garantindo que a categoria passada no ID será a mesma a ser atualizada
+		categoria = service.update(categoria); //Atualizando a categoria no banco de dados
+		return ResponseEntity.noContent().build(); //Retornando uma resposta com o objeto vazio e status code 204
 	}
 }

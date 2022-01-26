@@ -21,8 +21,8 @@ public class ClienteResource {
 	 * @return ResponseEntity (Classe que define as respostas para requisições HTTP)
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Cliente cliente = service.buscar(id);
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+		Cliente cliente = service.find(id);
 		return ResponseEntity.ok().body(cliente);
 	}
 }

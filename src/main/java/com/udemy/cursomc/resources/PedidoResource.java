@@ -21,8 +21,8 @@ public class PedidoResource {
 	 * @return ResponseEntity (Classe que define as respostas para requisições HTTP)
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Pedido pedido = service.buscar(id);
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
+		Pedido pedido = service.find(id);
 		return ResponseEntity.ok().body(pedido);
 	}
 }
