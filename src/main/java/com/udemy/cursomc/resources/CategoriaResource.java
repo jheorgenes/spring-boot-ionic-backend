@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +50,11 @@ public class CategoriaResource {
 		categoria.setId(id); //Garantindo que a categoria passada no ID será a mesma a ser atualizada
 		categoria = service.update(categoria); //Atualizando a categoria no banco de dados
 		return ResponseEntity.noContent().build(); //Retornando uma resposta com o objeto vazio e status code 204
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
