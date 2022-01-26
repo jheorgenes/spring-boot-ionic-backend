@@ -1,6 +1,8 @@
 package com.udemy.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.udemy.cursomc.domain.Categoria;
+import com.udemy.cursomc.dto.CategoriaDTO;
 import com.udemy.cursomc.services.CategoriaService;
 
 @RestController
@@ -23,6 +26,13 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
+	
+	@GetMapping()
+	public ResponseEntity<List<CategoriaDTO>> findAll() { //Definindo que será buscado o ID via parametro
+		List<Categoria> listaCategoria = service.findAll(); //Buscando categoria no banco de dados utilizando o método findALL que busca tudo
+		List<CategoriaDTO> listaCategoriaDTO = listaCategoria.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList()); //Convertendo uma lista de categoria em uma lista de categoria DTO utilizando o Stream
+		return ResponseEntity.ok().body(listaCategoriaDTO); //Retornando a lista de categoria no corpo da requisição
+	}
 	
 	/**
 	 * Busca Categorias pelo ID
