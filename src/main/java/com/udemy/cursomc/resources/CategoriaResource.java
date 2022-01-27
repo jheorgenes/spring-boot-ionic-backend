@@ -38,6 +38,19 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listaCategoriaDTO); //Retornando a lista de categoria no corpo da requisição
 	}
 	
+	/* Endpoint para buscar todas as categorias por paginação */
+	@GetMapping(value = "/page")
+	public ResponseEntity<Page<CategoriaDTO>> findAll(
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction
+			) { 
+		Page<Categoria> listaCategoria = service.findPage(page, linesPerPage, orderBy, direction); 
+		Page<CategoriaDTO> listaCategoriaDTO = listaCategoria.map(obj -> new CategoriaDTO(obj)); 
+		return ResponseEntity.ok().body(listaCategoriaDTO); 
+	}
+	
 	/**
 	 * Busca Categorias pelo ID
 	 * @return ResponseEntity (Classe que define as respostas para requisições HTTP)
@@ -72,18 +85,5 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
-	}
-	
-	/* Endpoint para buscar todas as categorias por paginação */
-	@GetMapping(value = "/page")
-	public ResponseEntity<Page<CategoriaDTO>> findAll(
-			@RequestParam(value = "page", defaultValue = "0") Integer page, 
-			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction
-			) { 
-		Page<Categoria> listaCategoria = service.findPage(page, linesPerPage, orderBy, direction); 
-		Page<CategoriaDTO> listaCategoriaDTO = listaCategoria.map(obj -> new CategoriaDTO(obj)); 
-		return ResponseEntity.ok().body(listaCategoriaDTO); 
 	}
 }

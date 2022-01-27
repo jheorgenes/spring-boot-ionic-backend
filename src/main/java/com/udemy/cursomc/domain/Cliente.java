@@ -45,13 +45,13 @@ public class Cliente implements Serializable {
 
 	public Cliente() {}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, Set<String> telefones) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod(); // Usando o Get para passar um enum com o tipo Integer
-		this.telefones = telefones;
+		
+		this.tipo = (tipo == null) ? null : tipo.getCod(); // Usando o Get para passar um enum com o tipo Integer (fazendo uma validação para inserir nulo (caso vier do DTO nulo) ou o valor do enum
 	}
 
 	public Integer getId() {
