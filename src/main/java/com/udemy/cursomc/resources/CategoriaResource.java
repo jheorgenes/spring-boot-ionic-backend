@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -47,8 +49,9 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){ //Define que os dados da categoria vão vir no corpo da requisição e não como parametro
-		categoria = service.insert(categoria);
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO){ //Define que os dados da categoria vão vir no corpo da requisição e não como parametro
+		Categoria categoria = service.fromDTO(categoriaDTO); //Convertenado categoriaDTO para categoria antes de inserir no banco
+		categoria = service.insert(categoria); //Inserindo no banco de dados.
 		URI uri = ServletUriComponentsBuilder //Criando uma URI completa utilisando a classe ServletUriComponentsBuilder
 					.fromCurrentRequest() //Chamando o método fromCurrentRequest que busca o corpo da URL
 					.path("/{id}") //Adicionando um path /{id} no final da URI
@@ -58,7 +61,8 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id){
+		Categoria categoria = service.fromDTO(categoriaDTO);
 		categoria.setId(id); //Garantindo que a categoria passada no ID será a mesma a ser atualizada
 		categoria = service.update(categoria); //Atualizando a categoria no banco de dados
 		return ResponseEntity.noContent().build(); //Retornando uma resposta com o objeto vazio e status code 204
