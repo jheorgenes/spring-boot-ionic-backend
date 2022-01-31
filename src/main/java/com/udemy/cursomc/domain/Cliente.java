@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 
 	//@JsonManagedReference() //Serializa Endereço
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //Liberando todas as permissões para excluir, alterar, etc as ligações dessa tabela.
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection // Anotation diz ao JPA que esse relacionamento será de uma entidade fraca
@@ -40,7 +41,7 @@ public class Cliente implements Serializable {
 	
 	//@JsonBackReference //Define para não buscar os pedidos desse cliente
 	@JsonIgnore
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente") 
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {}

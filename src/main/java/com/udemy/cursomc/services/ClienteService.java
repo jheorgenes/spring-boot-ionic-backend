@@ -49,7 +49,7 @@ public class ClienteService {
 		try {
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas"); // Ainda não implementado o deleteByID
+			throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionados"); // Ainda não implementado o deleteByID
 		}
 	}
 
@@ -80,7 +80,6 @@ public class ClienteService {
 		
 		return cliente;
 	}
-	
 	
 	private void updateData(Cliente newCliente, Cliente cliente) {
 		newCliente.setNome(cliente.getNome());
