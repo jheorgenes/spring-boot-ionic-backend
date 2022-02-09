@@ -40,7 +40,7 @@ public class CategoriaResource {
 	
 	/* Endpoint para buscar todas as categorias por paginação */
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<CategoriaDTO>> findAll(
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 

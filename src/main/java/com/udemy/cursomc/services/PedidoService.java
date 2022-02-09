@@ -15,6 +15,6 @@ public class PedidoService {
 	
 	public Pedido find(Integer id) {
 		Optional<Pedido> pedido = repository.findById(id);
-		return pedido.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName())); //Verifica se tem categoria ou se tiver nulo ou inválido, retorna a exception criada manualmente
+		return pedido.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName())); //Verifica se tem pedido. Se o pedido for inválido ou nulo, retorna a exception criada manualmente
 	}
 }
